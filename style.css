@@ -154,7 +154,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 16px;
-  width: 100%;
+  width: 500%;
   max-height: 500px; /* adjust if needed */
   overflow-y: auto;  /* enables scrolling */
   padding: 10px;
@@ -196,6 +196,7 @@ h1 {
 	image-rendering: pixelated;
 	margin-bottom: 5px;
 }
+
 
 
 
