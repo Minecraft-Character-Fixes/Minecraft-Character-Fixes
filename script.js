@@ -1,6 +1,6 @@
 let easterEggClicks = 0;
 
-// Panorama toggle
+
 if (localStorage.panoramaMovement === undefined) {
 	localStorage.panoramaMovement = "true";
 }
@@ -18,7 +18,7 @@ function triggerPanoramaMovement() {
 	}
 }
 
-// Easter egg music trigger
+
 function easterEgg() {
 	const clickSound = document.getElementById("click");
 	clickSound.play();
@@ -33,7 +33,7 @@ function easterEgg() {
 	easterEggClicks++;
 }
 
-// Button sounds
+
 const buttons = document.querySelectorAll(".minecraft-button");
 buttons.forEach(button => {
 	button.addEventListener("click", () => {
@@ -49,7 +49,7 @@ buttons.forEach(button => {
 // ===============================
 async function loadPacks(folder) {
   const container = document.getElementById("pack-list");
-  if (!container) return; // only run on pack list pages
+  if (!container) return; 
   container.textContent = "Loading...";
 
   try {
@@ -84,3 +84,4 @@ document.addEventListener("DOMContentLoaded", () => {
   if (location.pathname.includes("capes")) loadPacks("capes");
   if (location.pathname.includes("armors")) loadPacks("armors");
 });
+
