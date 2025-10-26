@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Minecraft Character Fixes</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="assets/icon.png">
+  <audio id="hoverSound" src="assets/hover.ogg" preload="auto"></audio>
+  <audio id="clickSound" src="assets/click.ogg" preload="auto"></audio>
+</head>
+<body>
+  <div class="backdrop-blur"></div>
+  <div class="container center">
+    <div class="logo"></div>
+    <div class="guibox">
+      <div class="button-list">
+        <a class="minecraft-button" href="mod.html">Minecraft Character Fixes</a>
+        <a class="minecraft-button" href="packmenu.html">Skin, Cape & Armor Mods</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const hoverSound = document.getElementById('hoverSound');
+    const clickSound = document.getElementById('clickSound');
+    document.querySelectorAll('.minecraft-button').forEach(btn => {
+      btn.addEventListener('mouseover', () => hoverSound.play());
+      btn.addEventListener('click', () => clickSound.play());
+    });
+  </script>
+</body>
+</html>

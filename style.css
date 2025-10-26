@@ -1,0 +1,176 @@
+@font-face {
+	font-family: 'Minecraft';
+	src: url('assets/Minecraft-LCE.ttf') format('truetype');
+	font-weight: normal;
+}
+@font-face {
+	font-family: 'Minecraft';
+	src: url('assets/Minecraft-LCE-Bold.ttf') format('truetype');
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'Terraria';
+	src: url('assets/terraria.ttf') format('truetype');
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Minecraft', sans-serif;
+	background-image: url('assets/Panorama.png');
+	background-size: cover;
+	background-attachment: fixed;
+	background-repeat: repeat-x;
+	animation: panorama 60s linear infinite;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	text-align: center;
+	color: white;
+	overflow: hidden;
+}
+
+.backdrop-blur {
+	position: fixed;
+	inset: 0;
+	backdrop-filter: blur(10px);
+	z-index: -30;
+}
+
+.container {
+	max-width: 1000px;
+	width: 90%;
+}
+
+.logo {
+	width: 720px;
+	max-width: 90%;
+	aspect-ratio: 720 / 188;
+	background-image: url('assets/logo.png');
+	background-size: cover;
+	image-rendering: pixelated;
+	margin: 0 auto;
+}
+
+.guibox {
+	margin: 20px auto;
+	padding: 2em;
+	border-image: url('assets/guimenu.png');
+	border-image-slice: 128 128 fill;
+	border-image-width: 64px;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.minecraft-button {
+	display: inline-block;
+	width: 400px;
+	height: 40px;
+	background-image: url('assets/btn-minecraft.png');
+	background-size: cover;
+	image-rendering: pixelated;
+	line-height: 32px;
+	text-decoration: none;
+	color: #fff;
+	text-shadow: 1px 1px 0 #000;
+	text-align: center;
+	cursor: pointer;
+	margin: 8px auto;
+	font-size: 16px;
+}
+
+.minecraft-button:hover {
+	background-image: url('assets/btn-minecraft-hover.png');
+	color: #ffff55;
+	text-shadow: 1.25px 1px 0 #000;
+}
+
+.github-button, .youtube-button, .patreon-button {
+	display: inline-block;
+	height: 80px;
+	width: 80px;
+	image-rendering: pixelated;
+	background-size: cover;
+	margin: 4px;
+}
+
+.github-button { background-image: url('assets/btn-github.png'); }
+.github-button:hover { background-image: url('assets/btn-github-hover.png'); }
+
+.youtube-button { background-image: url('assets/btn-youtube.png'); }
+.youtube-button:hover { background-image: url('assets/btn-youtube-hover.png'); }
+
+.patreon-button { background-image: url('assets/btn-patreon.png'); }
+.patreon-button:hover { background-image: url('assets/btn-patreon-hover.png'); }
+
+.panorama-button {
+	position: fixed;
+	bottom: 8px;
+	left: 8px;
+	width: 40px;
+	height: 40px;
+	background-image: url('assets/btn-panorama.png');
+	background-size: cover;
+	cursor: pointer;
+	image-rendering: pixelated;
+}
+.panorama-button:hover {
+	background-image: url('assets/btn-panorama-hover.png');
+}
+
+h1 {
+	font-weight: bold;
+	text-shadow: 2px 2px 0 #3f3f15;
+	color: #ffff55;
+}
+
+@keyframes panorama {
+	0% { background-position: 0; }
+	100% { background-position: calc(100vh / 144 * -820); }
+}
+
+
+.menu-title {
+  font-family: 'Minecraft', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: #ffffa0; /* warm light yellow, like LCE titles */
+  text-shadow: 2px 2px #3f3f3f;
+  margin-bottom: 10px;
+}
+
+.menu-desc {
+  font-family: 'Minecraft', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  color: #ffffff; /* full white for clarity */
+  text-shadow: 2px 2px #2a2a2a;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.mod-card {
+	background: rgba(0, 0, 0, 0.6);
+	border: 3px solid #3f3f3f;
+	border-radius: 8px;
+	padding: 10px;
+	margin: 15px auto;
+	width: 320px;
+	text-align: center;
+	color: #fff;
+	text-shadow: 2px 2px #2a2a2a;
+	transition: transform 0.2s ease;
+}
+
+.mod-card:hover {
+	transform: scale(1.03);
+	border-color: #00aa00;
+}
+
+.mod-thumb {
+	width: 128px;
+	height: 128px;
+	image-rendering: pixelated;
+	margin-bottom: 5px;
+}
+
