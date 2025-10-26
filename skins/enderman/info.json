@@ -1,1 +1,10 @@
-
+{
+  "name": "Enderman Skin",
+  "author": "T00nLINK",
+  "description": "A custom Enderman Skin",
+  "version": "1.0",
+  "category": "Skin",
+  "thumbnail": "preview.png",
+  "download": "enderman.zip",
+  "date_added": "2025-10-25"
+}
