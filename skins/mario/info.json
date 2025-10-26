@@ -1,10 +1,11 @@
 {
-  "name": "Mario Skin Pack",
-  "author": "Trixie Lulamoon",
-  "description": "A fun pack bringing Mario and friends into Minecraft Character Fixes! Includes Mario, Luigi, Peach, and Bowser.",
+  "name": "Vanilla Steve",
+  "author": "Cynessa",
+  "description": "Restores the Vanilla Steve from 1.21.5",
   "version": "1.0",
   "category": "Skin Pack",
   "thumbnail": "preview.png",
-  "download": "mario_pack.zip",
+  "download": "stevevanilla.zip",
   "date_added": "2025-10-25"
 }
+
