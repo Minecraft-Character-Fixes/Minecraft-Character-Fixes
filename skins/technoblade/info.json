@@ -1,1 +1,10 @@
-
+{
+  "name": "Technoblade",
+  "author": "T00nLINK",
+  "description": "Skin of the #1 Potato Farmer",
+  "version": "1.0",
+  "category": "Skin",
+  "thumbnail": "preview.png",
+  "download": "technoblade.zip",
+  "date_added": "2025-10-25"
+}
