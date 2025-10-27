@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Texture Wiki</title>
+  <link rel="stylesheet" href="style.css">
+  <audio id="hover" src="assets/hover.ogg" preload="auto"></audio>
+  <audio id="click" src="assets/click.ogg" preload="auto"></audio>
+
+  <style>
+    body { overflow-y: auto !important; }
+
+    .wiki-page {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 18px 0;
+    }
+
+    .wiki-sidebar {
+      width: 220px;
+      background: rgba(0,0,0,0.45);
+      border: 6px solid transparent; 
+      border-image: url('assets/guimenu.png');
+      border-image-slice: 128 128 fill;
+      border-image-width: 32px;
+      padding: 12px;
+      box-sizing: border-box;
+      position: sticky;
+      top: 32px;
+      height: fit-content;
+      image-rendering: pixelated;
+    }
+
+    .sidebar-title {
+      font-family: 'Minecraft', sans-serif;
+      color: #ffffa0;
+      text-shadow: 2px 2px #3f3f3f;
+      font-size: 16px;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-search {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Minecraft', sans-serif;
+      font-size: 13px;
+      padding: 8px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.06);
+      outline: none;
+    }
+
+    .sidebar-list a {
+      display: block;
+      padding: 8px 10px;
+      margin: 6px 0;
+      text-decoration: none;
+      color: #fff;
+      font-family: 'Minecraft', sans-serif;
+      text-shadow: 1px 1px 0 #000;
+      background: rgba(0,0,0,0.15);
+      border-radius: 4px;
+      transition: transform .06s, background .1s;
+    }
+
+    .sidebar-list a:hover,
+    .sidebar-list a.active {
+      background: rgba(0,170,0,0.15);
+      color: #ffff55;
+      transform: translateX(4px);
+    }
+
+    .wiki-main {
+      max-width: 820px;
+      width: 100%;
+    }
+
+    .wiki-header {
+      margin-bottom: 10px;
+      text-align: left;
+    }
+
+    .wiki-header .menu-title { font-size: 20px; }
+    .wiki-header .menu-desc { font-size: 13px; margin-top: 6px; }
+
+    .wiki-section {
+      margin-bottom: 18px;
+      padding: 12px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.25);
+      border-image: url('assets/guimenu.png');
+      border-image-slice: 128 128 fill;
+      border-image-width: 40px;
+    }
+
+    .section-title {
+      font-family: 'Minecraft', sans-serif;
+      color: #a0ffa0;
+      text-shadow: 2px 2px #3f3f3f;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+
+    .section-toggle {
+      font-size: 12px;
+      color: #fff;
+      opacity: 0.9;
+    }
+
+    .tex-card {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 8px;
+      margin: 8px 0;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.03);
+      border-radius: 6px;
+    }
+
+    .tex-preview {
+      width: 96px;
+      height: 96px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .tex-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      image-rendering: pixelated;
+      display:block;
+    }
+
+    .tex-info { flex: 1; min-width: 0; }
+    .tex-name {
+      font-family: 'Minecraft', sans-serif;
+      color: #ffffa0;
+      font-size: 14px;
+      display: inline-block;
+    }
+    .tex-desc {
+      font-family: 'Minecraft', sans-serif;
+      color: #fff;
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    .no-preview .tex-preview { display: none; }
+
+    .wiki-back { text-align: center; margin-top: 14px; }
+
+    @media (max-width: 920px) {
+      .wiki-page { flex-direction: column; padding: 10px; }
+      .wiki-sidebar { width: 100%; position: relative; top: 0; }
+      .tex-card { flex-direction: row; }
+      .tex-preview { width: 80px; height: 80px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="backdrop-blur"></div>
+
+  <div class="container">
+    <div class="logo"></div>
+
+    <div class="wiki-page">
+      <aside class="wiki-sidebar" aria-label="Wiki navigation">
+        <div class="sidebar-title">Texture Wiki</div>
+
+        <input id="wiki-search" class="sidebar-search" placeholder="Filter textures..." aria-label="Search textures">
+
+      </aside>
+
+      <main class="wiki-main">
+        <div class="wiki-header">
+          <p class="menu-title">Minecraft Character Fixes Texture Wiki</p>
+          <p class="menu-desc">Reference of every texture slot. Click a slot to copy its name to clipboard for quick modding. (only copies Steves Name)</p>
+        </div>
+
+        <section id="steve" class="wiki-section" data-section="steve">
+          <div class="section-title">
+            <span>Player Textures</span>
+            <span class="section-toggle">▲</span>
+          </div>
+
+          <div class="tex-card" data-name="SteveFix">
+            <div class="tex-preview"><img alt="SteveFix preview" data-src="wiki/textures/SteveFix.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveFix / AlexFix</div>
+              <div class="tex-desc">Base texture for Steve and Alex | Replace to change the player's main skin</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveFixEMS">
+            <div class="tex-preview"><img alt="SteveFixEMS preview" data-src="wiki/textures/SteveFixEMS.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveFixEMS / AlexFixEMS</div>
+              <div class="tex-desc">Emissive map any glowing pixels on the skin</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveCape">
+            <div class="tex-preview"><img alt="SteveCape preview" data-src="wiki/textures/SteveCape.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveCape / AlexCape</div>
+              <div class="tex-desc">Cape texture applied to the player's cape</div>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="trims" class="wiki-section" data-section="armor">
+          <div class="section-title">
+            <span>Armor Textures</span>
+            <span class="section-toggle">▲</span>
+          </div>
+
+          <div class="tex-card" data-name="SteveArmorBoots">
+            <div class="tex-preview"><img alt="SteveArmorBoots preview" data-src="wiki/textures/SteveArmorBoots.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveArmorBoots / AlexArmorBoots</div>
+              <div class="tex-desc">Armor texture for the boots layer</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveArmorChest">
+            <div class="tex-preview"><img alt="SteveArmorChest preview" data-src="wiki/textures/SteveArmorChest.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveArmorChest / AlexArmorChest</div>
+              <div class="tex-desc">Armor texture for the chestplate layer</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveArmorHelm">
+            <div class="tex-preview"><img alt="SteveArmorHelm preview" data-src="wiki/textures/SteveArmorHelm.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveArmorHelm / AlexArmorHelm</div>
+              <div class="tex-desc">Armor texture for the helmet layer</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveArmorLeg">
+            <div class="tex-preview"><img alt="SteveArmorLeg preview" data-src="wiki/textures/SteveArmorLeg.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveArmorLeg / AlexArmorLeg</div>
+              <div class="tex-desc">Armor texture for leggings/pants layer</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="trims" class="wiki-section" data-section="trims">
+          <div class="section-title">
+            <span>Armor Trims & Overlays</span>
+            <span class="section-toggle">▲</span>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimHelm">
+            <div class="tex-preview"><img alt="SteveTrimHelm preview" data-src="wiki/textures/SteveTrimHelm.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimHelm / AlexTrimHelm</div>
+              <div class="tex-desc">Trim overlay texture for the helmet. Overlays on top of base armor to add trim detail.</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimBoots">
+            <div class="tex-preview"><img alt="SteveTrimBoots preview" data-src="wiki/textures/SteveTrimBoots.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimBoots / AlexTrimBoots</div>
+              <div class="tex-desc">Trim overlay texture for boots. Overlays on top of base armor to add trim detail.</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimChest">
+            <div class="tex-preview"><img alt="SteveTrimChest preview" data-src="wiki/textures/SteveTrimChest.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimChest / AlexTrimChest</div>
+              <div class="tex-desc">Trim overlay texture for chestplates. Overlays on top of base armor to add trim detail.</div>
+            </div>
+          </div>
+        
+          <div class="tex-card" data-name="SteveTrimLeg">
+            <div class="tex-preview"><img alt="SteveTrimLeg preview" data-src="wiki/textures/SteveTrimLeg.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimLeg / AlexTrimLeg</div>
+              <div class="tex-desc">Trim overlay texture for leggings. Overlays on top of base armor to add trim detail.</div>
+            </div>
+          </div>
+
+        </section>
+
+        <section id="trimcolors" class="wiki-section" data-section="trimcolors">
+          <div class="section-title">
+            <span>Trim Color Palettes</span>
+            <span class="section-toggle">▲</span>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimColorBoots">
+            <div class="tex-preview"><img alt="SteveTrimColorBoots preview" data-src="wiki/textures/SteveTrimColorBoots.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimColorBoots / AlexTrimColorBoots</div>
+              <div class="tex-desc">Indexed color palette used to color the boots trim. Replace with palette PNG to change trim colors.</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimColorChest">
+            <div class="tex-preview"><img alt="SteveTrimColorChest preview" data-src="wiki/textures/SteveTrimColorChest.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimColorChest / AlexTrimColorChest</div>
+              <div class="tex-desc">Indexed color palette used to color the chestplate trim. Replace with palette PNG to change trim colors.</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimColorHelm">
+            <div class="tex-preview"><img alt="SteveTrimColorHelm preview" data-src="wiki/textures/SteveTrimColorHelm.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimColorHelm / AlexTrimColorHelm</div>
+              <div class="tex-desc">Indexed color palette used to color the helment trim. Replace with palette PNG to change trim colors.</div>
+            </div>
+          </div>
+
+          <div class="tex-card" data-name="SteveTrimColorLeg">
+            <div class="tex-preview"><img alt="SteveTrimColorLeg preview" data-src="wiki/textures/SteveTrimColorLeg.png"></div>
+            <div class="tex-info">
+              <div class="tex-name">SteveTrimColorLeg / AlexTrimColorLeg</div>
+              <div class="tex-desc">Indexed color palette used to color the leggings trim. Replace with palette PNG to change trim colors.</div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ----------------------------
+    // Helper & UI behavior
+    // ----------------------------
+    const hover = document.getElementById('hover');
+    const click = document.getElementById('click');
+
+    function playHover() { hover?.currentTime && (hover.currentTime = 0); hover?.play(); }
+    function playClick() { click?.currentTime && (click.currentTime = 0); click?.play(); }
+
+    document.querySelectorAll('.sidebar-list a').forEach(a => {
+      a.addEventListener('mouseover', playHover);
+      a.addEventListener('click', (e) => {
+        document.querySelectorAll('.sidebar-list a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        playClick();
+      });
+    });
+
+    document.querySelectorAll('.minecraft-button').forEach(btn => {
+      btn.addEventListener('mouseover', playHover);
+      btn.addEventListener('click', playClick);
+    });
+
+    document.querySelectorAll('.section-title').forEach(title => {
+      title.addEventListener('click', () => {
+        const section = title.parentElement;
+        const contentNodes = section.querySelectorAll('.tex-card');
+        const isHidden = contentNodes[0] && contentNodes[0].style.display === 'none';
+        contentNodes.forEach(n => n.style.display = isHidden ? 'flex' : 'none');
+        // toggle arrow symbol
+        const toggle = title.querySelector('.section-toggle');
+        if (toggle) toggle.textContent = isHidden ? '▲' : '▼';
+        playClick();
+      });
+    });
+
+    document.querySelectorAll('.tex-card').forEach(card => {
+      const img = card.querySelector('img[data-src]');
+      if (!img) return;
+      const src = img.getAttribute('data-src');
+
+      const test = new Image();
+      test.onload = () => {
+        img.src = src;
+        card.classList.remove('no-preview');
+      };
+      test.onerror = () => {
+        card.classList.add('no-preview');
+      };
+      test.src = src;
+
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        const name = card.dataset.name;
+        navigator.clipboard?.writeText(name).then(() => {
+          card.style.transition = 'box-shadow .18s';
+          card.style.boxShadow = '0 0 10px rgba(0,170,0,0.6)';
+          setTimeout(() => card.style.boxShadow = '', 300);
+          playClick();
+        }).catch(() => {
+          playClick();
+        });
+      });
+    });
+
+    const search = document.getElementById('wiki-search');
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll('.tex-card').forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        const desc = (card.querySelector('.tex-desc')?.textContent || '').toLowerCase();
+        const match = q === '' || name.includes(q) || desc.includes(q);
+        card.style.display = match ? 'flex' : 'none';
+      });
+    });
+
+
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.section-title .section-toggle').forEach(t => t.textContent = '▲');
+    });
+  </script>
+</body>
+</html>
